@@ -112,6 +112,8 @@ RUN GH_RUNNER_VERSION=${GH_RUNNER_VERSION:-$(curl --silent "https://api.github.c
 RUN apt-get -y update && \
     apt-get -y install python3-pip -y
 
+RUN pip3 install supervisor
+
 ENV PATH="${PATH}:/usr/lib/jdk/bin:/opt/gradle/bin"
 ENV JAVA_HOME="/usr/lib/jdk"
 ENV RUNNER_NAME=""
