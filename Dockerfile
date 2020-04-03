@@ -4,7 +4,7 @@ WORKDIR /opt
 
 RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 && \
     echo "install base packages" && \
-    apt-get update && apt-get install -y wget curl jq git docker tar apt-transport-https ca-certificates gnupg2 software-properties-common build-essential netcat vim && \
+    apt-get update && apt-get install -y wget curl jq git docker tar unzip apt-transport-https ca-certificates gnupg2 software-properties-common build-essential netcat vim && \
     echo "===============================================================" && \
     echo "install OpenJDK XX" && \
     wget https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.6%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.6_10.tar.gz -P /tmp && \
@@ -30,6 +30,8 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 && \
         docker-ce \
         nodejs \
         yarn \
+        python3-pip \
+        traceroute \
         postgresql \
         apache2-utils \
         redis-server && \
@@ -37,7 +39,8 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 && \
     echo "install npm packages" && \
     npm install -g n && \
     n lts && \
-    yarn global add wait-port
+    yarn global add wait-port && \
+    pip3 install supervisor
 
 RUN echo "===============================================================" && \
     echo "install minio" && \
@@ -66,7 +69,7 @@ RUN echo "===============================================================" && \
 RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
     apt-get -y update && \
-    apt-get -y install unzip google-chrome-stable && \
+    apt-get -y install google-chrome-stable && \
     wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/bin/chromedriver && \
@@ -93,7 +96,6 @@ RUN echo "===============================================================" && \
     mv /opt/gradle-* /opt/gradle && \
     export PATH="$PATH:/opt/gradle/bin" && \
     gradle -v
-
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod 644 /etc/supervisor/conf.d/supervisord.conf
@@ -126,4 +128,4 @@ RUN rm -rf /tmp/* && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
