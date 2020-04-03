@@ -110,7 +110,7 @@ RUN GH_RUNNER_VERSION=${GH_RUNNER_VERSION:-$(curl --silent "https://api.github.c
     && chown -R root: /home/runner
 
 RUN apt-get -y update && \
-    apt-get -y install python3-pip
+    apt-get -y install python3-pip -y
 
 ENV PATH="${PATH}:/usr/lib/jdk/bin:/opt/gradle/bin"
 ENV JAVA_HOME="/usr/lib/jdk"
