@@ -125,5 +125,3 @@ ENTRYPOINT ["/entrypoint.sh"]
 RUN rm -rf /tmp/* && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
