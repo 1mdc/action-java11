@@ -109,6 +109,9 @@ RUN GH_RUNNER_VERSION=${GH_RUNNER_VERSION:-$(curl --silent "https://api.github.c
     && ./bin/installdependencies.sh \
     && chown -R root: /home/runner
 
+RUN apt-get -y update && \
+    apt-get -y install python3-pip
+
 ENV PATH="${PATH}:/usr/lib/jdk/bin:/opt/gradle/bin"
 ENV JAVA_HOME="/usr/lib/jdk"
 ENV RUNNER_NAME=""
@@ -126,4 +129,4 @@ RUN rm -rf /tmp/* && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
-CMD ["/home/runner/bin/runsvc.sh"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
