@@ -7,8 +7,8 @@ RUN mkdir -p /usr/share/man/man1 /usr/share/man/man7 && \
     apt-get update && apt-get install -y wget curl jq git docker tar unzip apt-transport-https ca-certificates gnupg2 software-properties-common build-essential netcat vim && \
     echo "===============================================================" && \
     echo "install OpenJDK XX" && \
-    wget https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.6%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.6_10.tar.gz -P /tmp && \
-    tar -xvzf /tmp/OpenJDK11U-*.tar.gz -C /usr/lib && mv /usr/lib/jdk-* /usr/lib/jdk && \
+    wget https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14%2B36/OpenJDK14U-jdk_x64_linux_hotspot_14_36.tar.gz -P /tmp && \
+    tar -xvzf /tmp/OpenJDK14*.tar.gz -C /usr/lib && mv /usr/lib/jdk-* /usr/lib/jdk && \
     export PATH="$PATH:/usr/lib/jdk/bin" && \
     export JAVA_HOME="/usr/lib/jdk" && \
     java -version && \
@@ -50,8 +50,8 @@ RUN echo "===============================================================" && \
     
 RUN echo "===============================================================" && \
     echo "install kafka" && \
-    wget http://apache.mirror.anlx.net/kafka/2.2.0/kafka_2.12-2.2.0.tgz -P /tmp && \
-    tar -xzf /tmp/kafka_2.12-2.2.0.tgz && \
+    wget https://downloads.apache.org/kafka/2.5.0/kafka_2.12-2.5.0.tgz -P /tmp && \
+    tar -xzf /tmp/kafka_2.12-2.5.0.tgz && \
     ln -s kafka_* kafka
     
 RUN echo "===============================================================" && \
